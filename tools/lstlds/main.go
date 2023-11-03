@@ -12,16 +12,17 @@ import (
 )
 
 // TLD types
-// https://www.sohamkamani.com/golang/enums/
+// https://stackoverflow.com/a/71934535/12069968
+type TLDType string
 const (
-	Generic     string = "generic"
-	CountryCode        = "country-code"
+	Generic     TLDType = "generic"
+	CountryCode TLDType = "country-code"
 )
 
 type TLD struct {
-	Domain  string `header:"Domain"`
-	Type    string `header:"Type"`
-	Manager string `header:"TLD Manager"`
+	Domain  string  `header:"Domain"`
+	Type    TLDType `header:"Type"`
+	Manager string  `header:"TLD Manager"`
 }
 
 func main() {
