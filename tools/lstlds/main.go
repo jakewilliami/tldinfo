@@ -36,9 +36,10 @@ func main() {
 		os.Exit(1)
 	}
 
-	data := make([]TLD, len(table))
+	data := make(map[string]TLD, len(table))
 	for i := 0; i < len(table); i++ {
-		data[i] = table[i]
+		tld := table[i]
+		data[tld.Domain] = tld
 	}
 
 	tldJson, err := json.Marshal(data)
