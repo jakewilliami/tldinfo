@@ -1,4 +1,4 @@
-module github.com/jakewilliami/tldeets/scripts/lstlds
+module github.com/jakewilliami/tldeets/scripts/writetlds
 
 go 1.21.3
 
