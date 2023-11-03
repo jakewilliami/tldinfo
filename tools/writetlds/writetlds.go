@@ -6,26 +6,31 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
+	"path/filepath"
+	"runtime"
 
 	// https://stackoverflow.com/a/74328802
 	"github.com/nfx/go-htmltable"
+
+	"github.com/jakewilliami/tldeets/pkg/tldeets"
 )
 
-// TLD types
-// https://stackoverflow.com/a/71934535/12069968
-type TLDType string
-const (
-	Generic     TLDType = "generic"
-	CountryCode TLDType = "country-code"
+// https://stackoverflow.com/a/38644571
+var (
+	_, b, _, _ = runtime.Caller(0)
+	basepath   = filepath.Dir(b)
+	rootpath   = filepath.Dir(filepath.Dir(basepath))
 )
 
 type TLD struct {
-	Domain  string  `header:"Domain"`
-	Type    TLDType `header:"Type"`
-	Manager string  `header:"TLD Manager"`
+	Domain  string          `header:"Domain"`
+	Type    tldeets.TLDType `header:"Type"`
+	Manager string          `header:"TLD Manager"`
 }
 
 func main() {
+	fmt.Printf("[INFO] Found base module path at %s\n", rootpath)
+
 	htmltable.Logger = func(_ context.Context, msg string, fields ...any) {
 		fmt.Printf("[INFO] %s %v\n", msg, fields)
 	}
@@ -49,7 +54,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	outFile := "../../assets/tlds.json"
+	outFile := filepath.Join(rootpath, "assets", "tlds.json")
 	err = ioutil.WriteFile(outFile, tldJson, 0644)
 	if err != nil {
 		fmt.Printf("[ERROR] Count not write JSON output to %s: %s", outFile, err)
