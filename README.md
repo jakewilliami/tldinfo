@@ -6,8 +6,21 @@ A small command-line tool to provide basic information about a top-level domain 
 
 ## Quick Start
 
+### Using the Library
+
+```bash
+$ go get github.com/jakewilliami/tldeets  # TODO: get this working
 ```
-$ go run ./...  # Run the project
+
+```go
+TODO: add usage examples
+```
+
+### Compiling the CLI
+
+```bash
+$ ./build.sh    # All-in-one build script
+$ go run ./...  # Or run the project
 $ go build -o ./tldeets cmd/tldeets/main.go  # Or build it into a binary
 ```
 
