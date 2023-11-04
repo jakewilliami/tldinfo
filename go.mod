@@ -1,6 +1,6 @@
 module github.com/jakewilliami/tldeets
 
-go 1.21.3
+go 1.19
 
 require (
 	github.com/biter777/countries v1.6.6
