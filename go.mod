@@ -2,6 +2,8 @@ module github.com/jakewilliami/tldeets
 
 go 1.19
 
+replace github.com/jakewilliami/tldeets => ./pkg/tldeets
+
 require (
 	github.com/biter777/countries v1.6.6
 	github.com/nfx/go-htmltable v0.4.0
