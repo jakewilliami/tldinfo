@@ -17,4 +17,5 @@ type TLD struct {
 	Domain  string
 	Type    TLDType
 	Manager string
+	Country string
 }

@@ -8,9 +8,11 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 
 	// https://stackoverflow.com/a/74328802
 	"github.com/nfx/go-htmltable"
+	"github.com/biter777/countries"
 
 	"github.com/jakewilliami/tldeets/pkg/tldeets"
 )
@@ -42,10 +44,32 @@ func main() {
 		os.Exit(1)
 	}
 
-	data := make(map[string]TLD, len(table))
+	dataRaw := make(map[string]TLD, len(table))
 	for i := 0; i < len(table); i++ {
 		tld := table[i]
-		data[tld.Domain] = tld
+		dataRaw[tld.Domain] = tld
+	}
+
+	data := make(map[string]tldeets.TLD, len(dataRaw))
+	for tldStr, tld := range dataRaw {
+		var country string
+		// TODO: this will not always work; e.g. Saint Helena is has ccTLD .ac,
+		// but country code SH.  Another example: .su is for Soviet Union, but
+		// as it is no longer a country (e.g., ISO 3166-3).
+		if tld.Type == tldeets.CountryCode {
+			var countryCode string
+			if tldStr[0] == '.' {
+				countryCode = tldStr[1:]
+			}
+			countryCode = strings.ToUpper(countryCode)
+			country = countries.ByName(countryCode).Info().Name
+		}
+		data[tldStr] = tldeets.TLD{
+			Domain: tld.Domain,
+			Type: tld.Type,
+			Manager: tld.Manager,
+			Country: country,
+		}
 	}
 
 	tldJson, err := json.Marshal(data)
