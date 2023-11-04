@@ -1,0 +1,50 @@
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	"strings"
+
+	// https://stackoverflow.com/a/74328802
+	"github.com/nfx/go-htmltable"
+	"github.com/biter777/countries"
+
+	"github.com/jakewilliami/tldeets/pkg/tldeets"
+)
+
+type TLD struct {
+	Domain  string          `header:"Domain"`
+	Type    tldeets.TLDType `header:"Type"`
+	Manager string          `header:"TLD Manager"`
+}
+
+func main() {
+	htmltable.Logger = func(_ context.Context, msg string, fields ...any) {
+		fmt.Printf("[INFO] %s %v\n", msg, fields)
+	}
+
+	url := "https://www.iana.org/domains/root/db"
+	table, err := htmltable.NewSliceFromURL[TLD](url)
+	if err != nil {
+		fmt.Printf("[ERROR] Could not get table by %s: %s", url, err)
+		os.Exit(1)
+	}
+
+	for i := 0; i < len(table); i++ {
+		tld := table[i]
+		// TODO: this will not always work; e.g. Saint Helena is has ccTLD .ac,
+		// but country code SH.  Another example: .su is for Soviet Union, but
+		// as it is no longer a country (e.g., ISO 3166-3).
+		if tld.Type == tldeets.CountryCode {
+			var countryCode string
+			if tld.Domain[0] == '.' {
+				countryCode = tld.Domain[1:]
+			}
+			countryCode = strings.ToUpper(countryCode)
+			if countries.ByName(countryCode).Info().Name == "Unknown" {
+				fmt.Printf("[WARNING] Count not find country information associated with ccTLD \"%s\"\n", tld.Domain)
+			}
+		}
+	}
+}
