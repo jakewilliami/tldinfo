@@ -28,3 +28,4 @@ $ go build -o ./tldeets cmd/tldeets/main.go  # Or build it into a binary
 
   - Currently only supports country code TLDs (ccTLDs), as this is my personal main usecase for the application.  It does not yet generic TLDs (gTLD).
   - Internationalised ccTLDs are not yet supported.
+  - TODO: Currently requires local data file, but I will make these constants soon
