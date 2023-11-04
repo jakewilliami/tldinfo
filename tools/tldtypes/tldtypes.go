@@ -65,7 +65,7 @@ func main() {
 	}
 
 	fmt.Println("\nTLD type frequencies:")
-	fmt.Println(strings.Repeat("=", mtw + mcw + 3))
+	fmt.Println(strings.Repeat("=", mtw+mcw+3))
 	for _, tc := range typeCounts {
 		fmt.Printf("%-*s %*d\n", mtw+1, tc.Type, mcw+1, tc.Count)
 	}

@@ -7,8 +7,8 @@ import (
 	"strings"
 
 	// https://stackoverflow.com/a/74328802
-	"github.com/nfx/go-htmltable"
 	"github.com/biter777/countries"
+	"github.com/nfx/go-htmltable"
 
 	"github.com/jakewilliami/tldeets/pkg/tldeets"
 )
