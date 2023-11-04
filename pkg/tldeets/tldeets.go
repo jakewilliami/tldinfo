@@ -5,8 +5,12 @@ package tldeets
 type TLDType string
 
 const (
-	Generic     TLDType = "generic"
-	CountryCode TLDType = "country-code"
+	Generic           TLDType = "generic"
+	CountryCode       TLDType = "country-code"
+	Sponsored         TLDType = "sponsored"
+	Test              TLDType = "test"
+	GenericRestricted TLDType = "generic-restricted"
+	Infrastructure    TLDType = "infrastructure"
 )
 
 type TLD struct {
