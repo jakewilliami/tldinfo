@@ -1,12 +1,14 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
 	"fmt"
 	"os"
-	"path/filepath"
-	"runtime"
 	"sort"
+	"strings"
+
+	// https://stackoverflow.com/a/74328802
+	"github.com/nfx/go-htmltable"
 
 	"github.com/jakewilliami/tldeets/pkg/tldeets"
 )
@@ -16,35 +18,30 @@ type TLDTypeCount struct {
 	Count int
 }
 
-// https://stackoverflow.com/a/38644571
-var (
-	_, b, _, _ = runtime.Caller(0)
-	basepath   = filepath.Dir(b)
-	rootpath   = filepath.Dir(filepath.Dir(basepath))
-)
+type TLD struct {
+	Domain  string          `header:"Domain"`
+	Type    tldeets.TLDType `header:"Type"`
+	Manager string          `header:"TLD Manager"`
+}
 
 func main() {
-	dataPath := filepath.Join(rootpath, "assets", "tlds.json")
-	file, err := os.Open(dataPath)
-	if err != nil {
-		fmt.Printf("[ERROR] Could not read file \"%s\": %s\n", dataPath, err)
-		os.Exit(1)
+	htmltable.Logger = func(_ context.Context, msg string, fields ...any) {
+		fmt.Printf("[INFO] %s %v\n", msg, fields)
 	}
-	defer file.Close()
 
-	decoder := json.NewDecoder(file)
-	tlds := make(map[string]tldeets.TLD)
-	err = decoder.Decode(&tlds)
-
+	url := "https://www.iana.org/domains/root/db"
+	table, err := htmltable.NewSliceFromURL[TLD](url)
 	if err != nil {
-		fmt.Printf("[ERROR] Could not deserialised JSON data from file \"%s\": %s\n", dataPath, err)
+		fmt.Printf("[ERROR] Could not get table by %s: %s", url, err)
 		os.Exit(1)
 	}
 
-	countMap := make(map[tldeets.TLDType]int)
-	for _, v := range tlds {
-		countMap[v.Type]++
+	countMap := make(map[tldeets.TLDType]int, len(table))
+	for i := 0; i < len(table); i++ {
+		tld := table[i]
+		countMap[tld.Type]++
 	}
+	fmt.Printf("[INFO] Found %d unique TLD types from %d\n", len(countMap), len(table))
 
 	typeCounts := make([]TLDTypeCount, len(countMap))
 	i := 0
@@ -67,6 +64,8 @@ func main() {
 		}
 	}
 
+	fmt.Println("\nTLD type frequencies:")
+	fmt.Println(strings.Repeat("=", mtw + mcw + 3))
 	for _, tc := range typeCounts {
 		fmt.Printf("%-*s %*d\n", mtw+1, tc.Type, mcw+1, tc.Count)
 	}
