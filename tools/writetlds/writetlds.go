@@ -63,6 +63,9 @@ func main() {
 			}
 			countryCode = strings.ToUpper(countryCode)
 			country = countries.ByName(countryCode).Info().Name
+			if country == "Unknown" {
+				country = ""
+			}
 		}
 		data[tldStr] = tldeets.TLD{
 			Domain: tld.Domain,
@@ -72,7 +75,7 @@ func main() {
 		}
 	}
 
-	tldJson, err := json.Marshal(data)
+	tldJson, err := json.MarshalIndent(data, "", "  ")
 	if err != nil {
 		fmt.Printf("[ERROR] Could not JSONify data: %s\n", err)
 		os.Exit(1)
