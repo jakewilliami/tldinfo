@@ -161,6 +161,7 @@ func main() {
 
 	if writeMode == "const" {
 		pkgName := "tldinfo"
+		dataMapName := "TLDInfoMap"
 		outFile := filepath.Join(rootpath, "internal", pkgName, "tldconsts.go")
 
 		file, err := os.Create(outFile)
@@ -172,9 +173,25 @@ func main() {
 
 		writer := bufio.NewWriter(file)
 
+		// Write consts package header
 		_, err = writer.WriteString("package " + pkgName + "\n\n")
 		checkWriterErr(err, outFile)
-		_, err = writer.WriteString("var (\n")
+
+		// Write map
+		_, err = writer.WriteString("const " + dataMapName + " = map[string]TLD{\n")
+		checkWriterErr(err, outFile)
+
+		for _, kv := range data {
+			tld := kv.Val
+			_, err = writer.WriteString(fmt.Sprintf("\"%s\": TLD{\nDomain: \"%s\",\nType: \"%s\",\nManager: %s,\nCountry: \"%s\",\n},\n", tld.Domain, tld.Domain, tld.Type, strconv.Quote(tld.Manager), tld.Country))
+			checkWriterErr(err, outFile)
+		}
+
+		_, err = writer.WriteString("}\n\n")
+		checkWriterErr(err, outFile)
+
+		// Write convenient constants
+		_, err = writer.WriteString("const (\n")
 		checkWriterErr(err, outFile)
 
 		tldsSkipped := 0
@@ -195,7 +212,7 @@ func main() {
 				tldPrefix = strings.Title(tldPrefix)
 			}
 			// TODO: is this a good naming scheme for these constants?
-			_, err = writer.WriteString(fmt.Sprintf("%sTopLevelDomain = TLD{\nDomain: \"%s\",\nType: \"%s\",\nManager: %s,\nCountry: \"%s\",\n}\n", tldPrefix, tld.Domain, tld.Type, strconv.Quote(tld.Manager), tld.Country))
+			_, err = writer.WriteString(fmt.Sprintf("%sTopLevelDomain = %s[\"%s\"]\n", tldPrefix, dataMapName, tld.Domain))
 			checkWriterErr(err, outFile)
 		}
 
