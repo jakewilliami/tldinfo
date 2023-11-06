@@ -111,7 +111,7 @@ func main() {
 
 	if writeMode == "const" {
 		pkgName := "tldinfo"
-		outFile := filepath.Join(rootpath, "internal", pkgName, "tldsconst.go")
+		outFile := filepath.Join(rootpath, "internal", pkgName, "tldconsts.go")
 
 		file, err := os.Create(outFile)
 		if err != nil {
