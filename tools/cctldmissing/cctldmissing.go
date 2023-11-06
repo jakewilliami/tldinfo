@@ -10,7 +10,7 @@ import (
 	"github.com/biter777/countries"
 	"github.com/nfx/go-htmltable"
 
-	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
+	"github.com/jakewilliami/tldinfo"
 )
 
 type TLD struct {

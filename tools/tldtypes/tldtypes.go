@@ -10,7 +10,7 @@ import (
 	// https://stackoverflow.com/a/74328802
 	"github.com/nfx/go-htmltable"
 
-	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
+	"github.com/jakewilliami/tldinfo"
 )
 
 type TLDTypeCount struct {

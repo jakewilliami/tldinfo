@@ -17,7 +17,7 @@ import (
 	"github.com/biter777/countries"
 	"github.com/nfx/go-htmltable"
 
-	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
+	"github.com/jakewilliami/tldinfo"
 )
 
 // https://stackoverflow.com/a/38644571
@@ -111,7 +111,7 @@ func main() {
 
 	if writeMode == "const" {
 		pkgName := "tldinfo"
-		outFile := filepath.Join(rootpath, "pkg", pkgName, "tldsconst.go")
+		outFile := filepath.Join(rootpath, "internal", pkgName, "tldsconst.go")
 
 		file, err := os.Create(outFile)
 		if err != nil {

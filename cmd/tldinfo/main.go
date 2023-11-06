@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
+	"github.com/jakewilliami/tldinfo"
 )
 
 // https://stackoverflow.com/a/38644571
