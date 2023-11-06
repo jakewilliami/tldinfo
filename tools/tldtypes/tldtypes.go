@@ -10,17 +10,17 @@ import (
 	// https://stackoverflow.com/a/74328802
 	"github.com/nfx/go-htmltable"
 
-	"github.com/jakewilliami/tldeets/pkg/tldeets"
+	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
 )
 
 type TLDTypeCount struct {
-	Type  tldeets.TLDType
+	Type  tldinfo.TLDType
 	Count int
 }
 
 type TLD struct {
 	Domain  string          `header:"Domain"`
-	Type    tldeets.TLDType `header:"Type"`
+	Type    tldinfo.TLDType `header:"Type"`
 	Manager string          `header:"TLD Manager"`
 }
 
@@ -36,7 +36,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	countMap := make(map[tldeets.TLDType]int, len(table))
+	countMap := make(map[tldinfo.TLDType]int, len(table))
 	for i := 0; i < len(table); i++ {
 		tld := table[i]
 		countMap[tld.Type]++

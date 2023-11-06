@@ -10,12 +10,12 @@ import (
 	"github.com/biter777/countries"
 	"github.com/nfx/go-htmltable"
 
-	"github.com/jakewilliami/tldeets/pkg/tldeets"
+	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
 )
 
 type TLD struct {
 	Domain  string          `header:"Domain"`
-	Type    tldeets.TLDType `header:"Type"`
+	Type    tldinfo.TLDType `header:"Type"`
 	Manager string          `header:"TLD Manager"`
 }
 
@@ -36,7 +36,7 @@ func main() {
 		// TODO: this will not always work; e.g. Saint Helena is has ccTLD .ac,
 		// but country code SH.  Another example: .su is for Soviet Union, but
 		// as it is no longer a country (e.g., ISO 3166-3).
-		if tld.Type == tldeets.CountryCode {
+		if tld.Type == tldinfo.CountryCode {
 			var countryCode string
 			if tld.Domain[0] == '.' {
 				countryCode = tld.Domain[1:]

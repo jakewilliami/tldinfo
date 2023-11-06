@@ -17,7 +17,7 @@ import (
 	"github.com/biter777/countries"
 	"github.com/nfx/go-htmltable"
 
-	"github.com/jakewilliami/tldeets/pkg/tldeets"
+	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
 )
 
 // https://stackoverflow.com/a/38644571
@@ -29,7 +29,7 @@ var (
 
 type TLD struct {
 	Domain  string          `header:"Domain"`
-	Type    tldeets.TLDType `header:"Type"`
+	Type    tldinfo.TLDType `header:"Type"`
 	Manager string          `header:"TLD Manager"`
 }
 
@@ -70,14 +70,14 @@ func main() {
 		dataRaw[tld.Domain] = tld
 	}
 
-	data := make(map[string]tldeets.TLD, len(dataRaw))
+	data := make(map[string]tldinfo.TLD, len(dataRaw))
 	for tldStr, tld := range dataRaw {
 		var country string
 		// TODO: this will not always work; e.g. Saint Helena is has ccTLD .ac,
 		// but country code SH.  Another example: .su is for Soviet Union, but
 		// as it is no longer a country (e.g., ISO 3166-3).
 		// NOTE: while biter777/countries has domains, it's not complete
-		if tld.Type == tldeets.CountryCode {
+		if tld.Type == tldinfo.CountryCode {
 			var countryCode string
 			if tldStr[0] == '.' {
 				countryCode = tldStr[1:]
@@ -88,7 +88,7 @@ func main() {
 				country = ""
 			}
 		}
-		data[tldStr] = tldeets.TLD{
+		data[tldStr] = tldinfo.TLD{
 			Domain:  tld.Domain,
 			Type:    tld.Type,
 			Manager: tld.Manager,
@@ -110,7 +110,7 @@ func main() {
 	}
 
 	if writeMode == "const" {
-		pkgName := "tldeets"
+		pkgName := "tldinfo"
 		outFile := filepath.Join(rootpath, "pkg", pkgName, "tldsconst.go")
 
 		file, err := os.Create(outFile)
@@ -138,7 +138,7 @@ func main() {
 			if tld.Domain[0] == '.' {
 				tldPrefix = tld.Domain[1:]
 			}
-			if tld.Type == tldeets.CountryCode {
+			if tld.Type == tldinfo.CountryCode {
 				tldPrefix = strings.ToUpper(tldPrefix)
 			} else {
 				tldPrefix = strings.Title(tldPrefix)

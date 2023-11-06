@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"runtime"
 
-	"github.com/jakewilliami/tldeets/pkg/tldeets"
+	"github.com/jakewilliami/tldinfo/pkg/tldinfo"
 )
 
 // https://stackoverflow.com/a/38644571
@@ -18,7 +18,7 @@ var (
 )
 
 func main() {
-	dataPath := filepath.Join(rootpath, "assets", "tlds.json")
+	dataPath := filepath.Join(rootpath, "data", "tlds.json")
 	file, err := os.Open(dataPath)
 	if err != nil {
 		fmt.Printf("[ERROR] Could not read file \"%s\": %s\n", dataPath, err)
@@ -27,7 +27,7 @@ func main() {
 	defer file.Close()
 
 	decoder := json.NewDecoder(file)
-	tlds := make(map[string]tldeets.TLD)
+	tlds := make(map[string]tldinfo.TLD)
 	err = decoder.Decode(&tlds)
 
 	if err != nil {

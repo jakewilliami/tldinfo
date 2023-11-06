@@ -1,8 +1,6 @@
-module github.com/jakewilliami/tldeets
+module github.com/jakewilliami/tldinfo
 
 go 1.19
-
-replace github.com/jakewilliami/tldeets => ./pkg/tldeets
 
 require (
 	github.com/biter777/countries v1.6.6

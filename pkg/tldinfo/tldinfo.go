@@ -1,4 +1,4 @@
-package tldeets
+package tldinfo
 
 // TLD types
 // https://stackoverflow.com/a/71934535/12069968

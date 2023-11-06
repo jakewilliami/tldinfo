@@ -1,4 +1,4 @@
-package tldeets
+package tldinfo
 
 var (
 	ECTopLevelDomain = TLD{
