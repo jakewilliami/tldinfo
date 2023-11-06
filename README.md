@@ -13,7 +13,17 @@ $ go get github.com/jakewilliami/tldinfo
 ```
 
 ```go
-TODO: add usage examples
+package main
+
+import (
+	"fmt"
+
+	"github.com/jakewilliami/tldinfo"
+)
+
+func main() {
+	fmt.Printf("%v\n", tldinfo.TLDInfoMap[".jp"].Country)  // Japan
+}
 ```
 
 ### Compiling the CLI
