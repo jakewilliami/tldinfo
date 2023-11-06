@@ -1,6 +1,6 @@
 package tldinfo
 
-const TLDInfoMap = map[string]TLD{
+var TLDInfoMap = map[string]TLD{
 	".aaa": TLD{
 		Domain:  ".aaa",
 		Type:    "generic",
@@ -9549,7 +9549,7 @@ const TLDInfoMap = map[string]TLD{
 	},
 }
 
-const (
+var (
 	AaaTopLevelDomain                = TLDInfoMap[".aaa"]
 	AarpTopLevelDomain               = TLDInfoMap[".aarp"]
 	AbarthTopLevelDomain             = TLDInfoMap[".abarth"]
