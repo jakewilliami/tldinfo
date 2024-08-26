@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         version:
-          - "1.19"  # Version originally developed on
+          - "1.21"  # earliest version required by dependencies; writetlds.go uses the `slices` package, which was added in this version
           - "1.22"  # Relatively recent version
           - "stable"  # Latest stable version
         os:
