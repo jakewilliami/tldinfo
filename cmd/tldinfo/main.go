@@ -18,6 +18,22 @@ var (
 )
 
 func main() {
+	if len(os.Args) < 2 {
+		fmt.Println("[ERROR] Must specify a TLD to search for")
+		os.Exit(1)
+	}
+
+	// TODO: handle multiple arguments
+	tldStr := os.Args[1]
+	if tldStr[0] != '.' {
+		tldStr = "." + tldStr
+	}
+	tld := tldinfo.TLDInfoMap[tldStr]
+	country := tld.Country
+	fmt.Printf("%v\n", country)
+}
+
+func _mainJSON() {
 	dataPath := filepath.Join(rootpath, "data", "tlds.json")
 	file, err := os.Open(dataPath)
 	if err != nil {
