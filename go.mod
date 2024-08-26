@@ -1,6 +1,6 @@
 module github.com/jakewilliami/tldinfo
 
-go 1.19
+go 1.21
 
 require (
 	github.com/biter777/countries v1.6.6
