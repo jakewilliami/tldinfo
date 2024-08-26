@@ -1,7 +1,7 @@
 package tldinfo
 
 // TLD types
-// https://stackoverflow.com/a/71934535/12069968
+// https://stackoverflow.com/a/71934535/
 type TLDType string
 
 const (
