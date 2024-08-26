@@ -26,11 +26,18 @@ func main() {
 }
 ```
 
-### Compiling the CLI
+### Using the CLI
 
+Compilation:
 ```bash
 $ ./build.sh    # All-in-one build script
 $ go build -o ./tldinfo cmd/tldinfo/main.go  # Or build it into a binary
+```
+
+Run:
+```bash
+$ ./tldinfo jp  # or ./tldinfo .jp
+$ ./tldinfo -h  # help command coming soon™!
 ```
 
 ## Caveats
