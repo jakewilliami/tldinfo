@@ -3,5 +3,5 @@
 set -xe
 trap 'exit 1' INT
 
-go run ./tools/writetlds/ const
+go generate  # runs writetlds for json and go
 go build -o ./tldinfo ./cmd/tldinfo/main.go
