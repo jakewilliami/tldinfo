@@ -19,6 +19,15 @@ type TLD struct {
 	Manager string          `header:"TLD Manager"`
 }
 
+func isASCII(s string) bool {
+	for _, char := range s {
+		if char > 127 {
+			return false
+		}
+	}
+	return true
+}
+
 func main() {
 	htmltable.Logger = func(_ context.Context, msg string, fields ...any) {
 		fmt.Printf("[INFO] %s %v\n", msg, fields)
@@ -33,6 +42,13 @@ func main() {
 
 	for i := 0; i < len(table); i++ {
 		tld := table[i]
+		if !isASCII(tld.Domain) {
+			// Skip non-ascii domains for now - will add back later
+			// TODO: consider handling non-ASCII domains with Punycode; see
+			// github.com/bombsimon/tld-validator
+			continue
+		}
+
 		// TODO: this will not always work; e.g. Saint Helena is has ccTLD .ac,
 		// but country code SH.  Another example: .su is for Soviet Union, but
 		// as it is no longer a country (e.g., ISO 3166-3).
