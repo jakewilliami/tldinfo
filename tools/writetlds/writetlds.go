@@ -178,7 +178,7 @@ func main() {
 		checkWriterErr(err, outFile)
 
 		// Write map
-		_, err = writer.WriteString("const " + dataMapName + " = map[string]TLD{\n")
+		_, err = writer.WriteString("var " + dataMapName + " = map[string]TLD{\n")
 		checkWriterErr(err, outFile)
 
 		for _, kv := range data {
@@ -191,7 +191,7 @@ func main() {
 		checkWriterErr(err, outFile)
 
 		// Write convenient constants
-		_, err = writer.WriteString("const (\n")
+		_, err = writer.WriteString("var (\n")
 		checkWriterErr(err, outFile)
 
 		tldsSkipped := 0
