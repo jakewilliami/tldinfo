@@ -10,20 +10,32 @@ on:
 
 jobs:
   test:
-    name: Build & Test
-    runs-on: ubuntu-latest
-
-    env:
-      CGO_ENABLED: 0
-
+    name: Go - ${{ matrix.version }} - ${{ matrix.os }} - ${{ matrix.arch }} - ${{ github.event_name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        version:
+          - "1.19"  # Version originally developed on
+          - "1.22"  # Relatively recent version
+          - "stable"  # Latest stable version
+        os:
+          - ubuntu-latest
+          - macOS-latest
+          - windows-latest
+        arch:
+          - x64
+          - x86 # 32-bit; i686
+    # env:
+      # CGO_ENABLED: 0
     steps:
-      - name: Check out code
+      - name: Checkout package
         uses: actions/checkout@v4
 
       - name: Set up Go
         uses: actions/setup-go@v5
         with:
-          go-version: "1.22"
+          go-version: ${{ matrix.version }}
 
       - name: Run all tests
         run: go test -v ./...
