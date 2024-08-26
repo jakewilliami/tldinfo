@@ -1,5 +1,10 @@
 package tldinfo
 
+// Generate new const library file with go generate
+// Idea from Simon Sawert:
+// https://github.com/bombsimon/tld-validator/blob/c0d0fbf9/tld.go#L9
+//go:generate go run tools/writetlds/writetlds.go const
+
 // TLD types
 // https://stackoverflow.com/a/71934535/
 type TLDType string
