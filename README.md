@@ -75,3 +75,7 @@ This library/CLI is **not** a top-level domain parser.  For parsers, see [`githu
 ## Project Structure
 
 Library files are in the root directory.  Command-line tools are in the `cmd/` subdirectory.  The primary command line tool at time of writing simply states the country associated with a TLD.  Internal tools are in the `tools/` subdirectory (these are tools that help with package development).
+
+## Citation
+
+If your research depends on `tldinfo`, please consider giving us a formal citation: [`citation.bib`](./citation.bib)
